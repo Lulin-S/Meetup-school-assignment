@@ -1,0 +1,51 @@
+.eventLogo {
+  font-size: 6rem;
+}
+.textContent {
+  font-size: 32px;
+  text-align: center;
+  padding: 80px;
+}
+.textContent :first-child {
+  font-size: 36px;
+}
+
+.content::before {
+  background-image: url("../assets/img/meetupbkg.jpg");
+  content: " ";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
+}
+.contentContainer {
+  position: relative;
+}
+.eventsContent {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.joinButton {
+  padding: 22px;
+  background-color: rgb(203, 125, 174);
+  border-radius: 16px;
+  border: none;
+  margin-top: 60px;
+  color: white;
+}
+
+.joinButton:hover {
+  background-color: rgb(174, 79, 144);
+}
