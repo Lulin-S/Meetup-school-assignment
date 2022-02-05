@@ -5,6 +5,9 @@ import CommentItem from "../Comment/CommentItem";
 import styles from "./Events.module.css";
 import { Link } from "react-router-dom";
 import Item from "antd/lib/list/Item";
+import { useSelector, useDispatch } from "react-redux";
+
+import { counterActions } from "../../store/counter";
 
 interface typeState {
   props: {
@@ -16,34 +19,34 @@ interface typeState {
       name: string;
       passed: boolean;
       upcoming: boolean;
+      counter: number;
+      comments: object[];
     };
   };
 }
 
-export default function Event(props: object) {
+export default function Event(props: any) {
   let location = useLocation();
-  const state = location.state as typeState;
+  const locationState = location.state as typeState;
 
-  const [peopleRegistred, setPeopleRegistred] = useState<number>(0);
+  const dispatch = useDispatch();
+  const eventsListCounter = useSelector((state: any) => {
+    return state.counter.eventsList;
+  });
+
+  const currentEvent = eventsListCounter.find(
+    (item: any) => item.id === locationState.props.item.id
+  );
+
+  const incrementHandler = () => {
+    dispatch(counterActions.increment(currentEvent));
+  };
+
+  const addCommentToReduxHandler = (info: object) => {
+    const newInfo = { info, eventID: currentEvent.id };
+    dispatch(counterActions.addCommentToRedux(newInfo));
+  };
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const [commentList, setCommentList] = useState<object[]>([]);
-
-  const handleButtonClick = () => {
-    setPeopleRegistred(peopleRegistred + 1);
-    setIsDisabled(true);
-  };
-
-  const submitComment = (info: object) => {
-    console.log(info);
-    const newCommentList = [...commentList, info];
-    setCommentList(newCommentList);
-  };
-
-  const removeComment = (index: any) => {
-    const newCommentList = [...commentList];
-    newCommentList.splice(index, 1);
-    setCommentList(newCommentList);
-  };
 
   return (
     <div className={styles.contentContainer}>
@@ -51,30 +54,24 @@ export default function Event(props: object) {
         Meetup
       </Link>
       <div className={styles.eventContentContainer}>
-        <img src={state?.props.item.image} alt="event"></img>
-        <p>{state?.props.item.name}</p>
-        <p>{state?.props.item.date}</p>
-        <p>{state?.props.item.details}</p>
+        <img src={currentEvent?.image} alt="event"></img>
+        <p>{currentEvent?.name}</p>
+        <p>{currentEvent?.date}</p>
+        <p>{currentEvent?.details}</p>
         <br />
-        <p className="totalCount">Attendees: {peopleRegistred}</p>
+        <p className="totalCount">Attendees:{currentEvent.counter} </p>
       </div>
 
       <div className={styles.commentContentContainer}>
-        {commentList.map((item, index) => {
-          return (
-            <CommentItem
-              key={`${item} ${index}`}
-              comment={item}
-              removeItem={(e: any) => removeComment(index)}
-            />
-          );
+        {currentEvent.comments.map((item: any, index: any) => {
+          return <CommentItem key={`${item} ${index}`} comment={item} />;
         })}
 
-        <CommentInput submitComment={submitComment} />
+        <CommentInput submitComment={addCommentToReduxHandler} />
 
         <button
           disabled={isDisabled}
-          onClick={handleButtonClick}
+          onClick={incrementHandler}
           className={styles.register}
         >
           {isDisabled ? "Attend!" : "Attend for upcoming event"}

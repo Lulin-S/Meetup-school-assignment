@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./Home.module.css";
 import Events from "../components/Events/Events";
 
-const eventsList = [
+export const eventsList = [
   {
     id: 1,
     name: "English coversation",
@@ -14,6 +14,8 @@ const eventsList = [
       "https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
     upcoming: true,
     passed: false,
+    counter: 0,
+    comments: [],
   },
   {
     id: 2,
@@ -23,6 +25,8 @@ const eventsList = [
       "https://images.unsplash.com/photo-1531669494349-268cb716a234?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80",
     upcoming: true,
     passed: false,
+    counter: 0,
+    comments: [],
   },
   {
     id: 3,
@@ -32,6 +36,8 @@ const eventsList = [
       "https://images.unsplash.com/photo-1519181245277-cffeb31da2e3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
     upcoming: false,
     passed: true,
+    counter: 0,
+    comments: [],
   },
   {
     id: 4,
@@ -41,6 +47,8 @@ const eventsList = [
       "https://images.unsplash.com/photo-1505902987837-9e40ec37e607?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80",
     upcoming: true,
     passed: false,
+    counter: 0,
+    comments: [],
   },
   {
     id: 5,
@@ -50,6 +58,8 @@ const eventsList = [
       "https://images.unsplash.com/photo-1519181245277-cffeb31da2e3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
     upcoming: true,
     passed: false,
+    counter: 0,
+    comments: [],
   },
 ];
 
@@ -60,6 +70,8 @@ type eventsItem = {
   date: string;
   upcoming: boolean;
   passed: boolean;
+  counter: number;
+  comments: object[];
 };
 export default function Home(): JSX.Element {
   return (
